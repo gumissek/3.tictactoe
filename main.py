@@ -52,17 +52,18 @@ def print_tictactoe():
 
 def checking_win(player):
     # skosy / \ diagonal
-    if (TABLE[0][0] == player and TABLE[1][1] == player and TABLE[2][2] == player) or(
-        TABLE[0][2] == player and TABLE[1][1] == player and TABLE[2][0] == player):
+    if (TABLE[0][0] == player and TABLE[1][1] == player and TABLE[2][2] == player) or (
+            TABLE[0][2] == player and TABLE[1][1] == player and TABLE[2][0] == player):
         return True
     # kolumny | | | columns
     for column in range(len(TABLE[0])):
-        if TABLE[0][column]==player and TABLE[1][column]==player and TABLE[2][column]==player:
+        if TABLE[0][column] == player and TABLE[1][column] == player and TABLE[2][column] == player:
             return True
     # wiersze --- rows
     for row in TABLE:
-        if row[0]==player and row[1]==player and row[2]==player:
+        if row[0] == player and row[1] == player and row[2] == player:
             return True
+
 
 def is_table_full(table):
     for row in table:
@@ -89,43 +90,51 @@ is_game_on = True
 current_player = random.choice(players)
 
 while is_game_on:
-    print_tictactoe()
-    print(f'Current score X: {player1_score}')
-    print(f'Current score O: {player2_score}')
-    print('---------------------------------')
-    print(f'Current player is: {current_player}')
+    keep_playing = 'Y'
+    while keep_playing == 'Y':
+        print_tictactoe()
+        print(f'Current score X: {player1_score}')
+        print(f'Current score O: {player2_score}')
+        print('---------------------------------')
+        print(f'Current player is: {current_player}')
 
-    chosen_row = int(input('Type a row you want to pick: '))
-    chosen_column = int(input('Type a column you want to pick: '))
+        chosen_row = int(input('Type a row you want to pick: '))
+        chosen_column = int(input('Type a column you want to pick: '))
 
-    # checking if cell is empty
-    try:
-        cell = TABLE[chosen_row - 1][chosen_column - 1]
-    except IndexError:
-        print('That cell doesn`t exist, pick another')
-    else:
-        if cell == '':
-
-            TABLE[chosen_row - 1][chosen_column - 1] = current_player
-
-            if current_player == player1:
-                current_player = player2
-                print('\n' * 20)
-            else:
-                current_player = player1
-                print('\n' * 20)
-        else:
-
+        # checking if cell is empty
+        try:
+            cell = TABLE[chosen_row - 1][chosen_column - 1]
+        except IndexError:
             print('\n' * 20)
-            print('That cell is not empty, choose another')
-    if checking_win(player1):
-        print(f'Player {player1} scores a point')
-        player1_score+=1
-        reset_table()
-    if checking_win(player2):
-        print(f'Player {players} scores a point')
-        player2_score+=1
-        reset_table()
-    if is_table_full(TABLE):
-        print('DRAW')
-        reset_table()
+            print('That cell doesn`t exist, pick another')
+        else:
+            if cell == '':
+
+                TABLE[chosen_row - 1][chosen_column - 1] = current_player
+
+                if current_player == player1:
+                    current_player = player2
+                    print('\n' * 20)
+                else:
+                    current_player = player1
+                    print('\n' * 20)
+            else:
+                print('\n' * 20)
+                print('That cell is not empty, choose another')
+        if checking_win(player1):
+            print(f'Player {player1} scores a point')
+            player1_score += 1
+            reset_table()
+            keep_playing = input('Do you want to play tictactoe? type Y for yes or N for no: ').upper()
+        if checking_win(player2):
+            print(f'Player {player2} scores a point')
+            player2_score += 1
+            reset_table()
+            keep_playing = input('Do you want to play tictactoe? type Y for yes or N for no: ').upper()
+        if is_table_full(TABLE):
+            print('DRAW')
+            reset_table()
+            keep_playing = input('Do you want to play tictactoe? type Y for yes or N for no: ').upper()
+    else:
+        print('Thanks for playing ~Piotr')
+        quit()
