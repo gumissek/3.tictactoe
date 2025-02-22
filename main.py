@@ -6,48 +6,62 @@ def print_tictactoe():
         print(level)
 
 
-def check_win():
-    global player1_score
-    global player2_score
+# def check_win():
+#     global player1_score
+#     global player2_score
+#     # skosy / \ diagonal
+#     if TABLE[0][0] == player1 and TABLE[1][1] == player1 and TABLE[2][2] == player1:
+#         print(f'Player {player1} scores a point :3')
+#         player1_score += 1
+#         return True
+#     elif TABLE[0][2] == player1 and TABLE[1][1] == player1 and TABLE[2][0] == player1:
+#         print(f'Player {player1} scores a point :3')
+#         player1_score += 1
+#         return True
+#     if TABLE[0][0] == player2 and TABLE[1][1] == player2 and TABLE[2][2] == player2:
+#         print(f'Player {player2} scores a point :3')
+#         player2_score += 1
+#         return True
+#     elif TABLE[0][2] == player2 and TABLE[1][1] == player2 and TABLE[2][0] == player2:
+#         print(f'Player {player2} scores a point :3')
+#         player2_score += 1
+#         return True
+#     # kolumny | | | columns
+#     if TABLE[0][0] == player1 and TABLE[1][0] == player1 and TABLE[2][0] == player1 or TABLE[0][1] == player1 and \
+#             TABLE[1][1] == player1 and TABLE[2][1] == player1 or TABLE[0][2] == player1 and TABLE[1][2] == player1 and \
+#             TABLE[2][2] == player1:
+#         print(f'Player {player1} scores a point :3')
+#         player1_score += 1
+#         return True
+#     elif TABLE[0][0] == player2 and TABLE[1][0] == player2 and TABLE[2][0] == player2 or TABLE[0][1] == player2 and \
+#             TABLE[1][1] == player2 and TABLE[2][1] == player2 or TABLE[0][2] == player2 and TABLE[1][2] == player2 and \
+#             TABLE[2][2] == player2:
+#         print(f'Player {player2} scores a point :3')
+#         player2_score += 1
+#         return True
+#     # wiersze --- rows
+#     for level in TABLE:
+#         if level[0] == player1 and level[1] == player1 and level[2] == player1:
+#             print(f'Gracz {player1} scores a point :3')
+#             player1_score += 1
+#             return True
+#         elif level[0] == player2 and level[1] == player2 and level[2] == player2:
+#             print(f'Gracz {player2} scores a point :3')
+#             player2_score += 1
+#             return True
+
+def checking_win(player):
     # skosy / \ diagonal
-    if TABLE[0][0] == player1 and TABLE[1][1] == player1 and TABLE[2][2] == player1:
-        print(f'Player {player1} scores a point :3')
-        player1_score += 1
-        return True
-    elif TABLE[0][2] == player1 and TABLE[1][1] == player1 and TABLE[2][0] == player1:
-        print(f'Player {player1} scores a point :3')
-        player1_score += 1
-        return True
-    if TABLE[0][0] == player2 and TABLE[1][1] == player2 and TABLE[2][2] == player2:
-        print(f'Player {player2} scores a point :3')
-        player2_score += 1
-        return True
-    elif TABLE[0][2] == player2 and TABLE[1][1] == player2 and TABLE[2][0] == player2:
-        print(f'Player {player2} scores a point :3')
-        player2_score += 1
+    if (TABLE[0][0] == player and TABLE[1][1] == player and TABLE[2][2] == player) or(
+        TABLE[0][2] == player and TABLE[1][1] == player and TABLE[2][0] == player):
         return True
     # kolumny | | | columns
-    if TABLE[0][0] == player1 and TABLE[1][0] == player1 and TABLE[2][0] == player1 or TABLE[0][1] == player1 and \
-            TABLE[1][1] == player1 and TABLE[2][1] == player1 or TABLE[0][2] == player1 and TABLE[1][2] == player1 and \
-            TABLE[2][2] == player1:
-        print(f'Player {player1} scores a point :3')
-        player1_score += 1
-        return True
-    elif TABLE[0][0] == player2 and TABLE[1][0] == player2 and TABLE[2][0] == player2 or TABLE[0][1] == player2 and \
-            TABLE[1][1] == player2 and TABLE[2][1] == player2 or TABLE[0][2] == player2 and TABLE[1][2] == player2 and \
-            TABLE[2][2] == player2:
-        print(f'Player {player2} scores a point :3')
-        player2_score += 1
-        return True
-    # wiersze --- rows
-    for level in TABLE:
-        if level[0] == player1 and level[1] == player1 and level[2] == player1:
-            print(f'Gracz {player1} scores a point :3')
-            player1_score += 1
+    for column in range(len(TABLE[0])):
+        if TABLE[0][column]==player and TABLE[1][column]==player and TABLE[2][column]==player:
             return True
-        elif level[0] == player2 and level[1] == player2 and level[2] == player2:
-            print(f'Gracz {player2} scores a point :3')
-            player2_score += 1
+    # wiersze --- rows
+    for row in TABLE:
+        if row[0]==player and row[1]==player and row[2]==player:
             return True
 
 def is_table_full(table):
@@ -104,7 +118,13 @@ while is_game_on:
 
             print('\n' * 20)
             print('That cell is not empty, choose another')
-    if check_win():
+    if checking_win(player1):
+        print(f'Player {player1} scores a point')
+        player1_score+=1
+        reset_table()
+    if checking_win(player2):
+        print(f'Player {players} scores a point')
+        player2_score+=1
         reset_table()
     if is_table_full(TABLE):
         print('DRAW')
