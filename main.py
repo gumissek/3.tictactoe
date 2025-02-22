@@ -3,8 +3,9 @@ import random
 
 def print_tictactoe():
     for level in TABLE:
-        print(level)
-
+        print('_______')
+        print(f'{level[0]} | {level[1]} | {level[2]}')
+    print('_______')
 
 # def check_win():
 #     global player1_score
